@@ -14,8 +14,9 @@ For the most part, NS is a usual curly-brace language.
 ### Keywords
 NS has 26 reserved keywords:
 ```ruby
-and break class continue fn do else false fib for gu if import in 
-is ivic native nil not or print return self super true when while yield
+break continue else this super false for if null fn
+return true while in import when is throw class
+effect stance scenario ai
 ```
 
 ### Comments
