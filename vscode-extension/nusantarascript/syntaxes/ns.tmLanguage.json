@@ -1,0 +1,178 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "NusantaraScript",
+	"patterns": [
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#strings"
+		},
+		{
+			"include": "#literals"
+		},
+		{
+			"include": "#comments"
+		},
+		{
+			"include": "#builtin-types"
+		}
+	],
+	"repository": {
+		"keywords": {
+			"patterns": [{
+				"name": "keyword.control.ns",
+				"match": "\\b(if|else|while|for|when|return|fn|effect|stance|scenario|ai|break|continue|this|super|false|true|null|in|!in|is|!is|import|throw|init)\\b"
+			}, {
+				"name": "keyword.this.ns",
+				"match": "@"
+			}]
+		},
+		"strings": {
+			"name": "string.quoted.double.ns",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.ns",
+					"match": "\\\\."
+				}
+			]
+		},
+		"literals": {
+			"patterns": [
+				{
+					"include": "#boolean"
+				},
+				{
+					"include": "#numeric"
+				}
+			],
+			"repository": {
+				"boolean": {
+					"match": "\\b(true|false)\\b",
+					"name": "constant.language.boolean.ns"
+				},
+				"numeric": {
+					"patterns": [
+						{
+							"comment": "0.1, -4_2.5, 6.022e23, 10E-5",
+							"match": "(\\B\\-|\\b)(?<![\\[\\](){}\\p{L}_\\p{N}\\p{M}]\\.)[0-9][0-9_]*(?=\\.[0-9]|[eE])(?:\\.[0-9][0-9_]*)?(?:[eE][-+]?[0-9][0-9_]*)?\\b(?!\\.[0-9])",
+							"name": "constant.numeric.float.decimal.ns"
+						},
+						{
+							"comment": "0x1p, 0x1p_2, 0x1.5pa, 0x1.1p+1f, 0x1pz",
+							"match": "(\\B\\-|\\b)(?<![\\[\\](){}\\p{L}_\\p{N}\\p{M}]\\.)(0x[0-9a-fA-F][0-9a-fA-F_]*)(?:\\.[0-9a-fA-F][0-9a-fA-F_]*)?(?:[pP][-+]?\\w*)\\b(?!\\.[0-9])",
+							"name": "invalid.illegal.numeric.float.invalid-exponent.ns"
+						},
+						{
+							"comment": "0x1.5w (note that 0x1.f may be a valid expression)",
+							"match": "(\\B\\-|\\b)(?<![\\[\\](){}\\p{L}_\\p{N}\\p{M}]\\.)(0x[0-9a-fA-F][0-9a-fA-F_]*)\\.[0-9][\\w.]*",
+							"name": "invalid.illegal.numeric.float.missing-exponent.ns"
+						},
+						{
+							"comment": "-.5, .2f (note that 1.-.5 may be a valid expression)",
+							"match": "(?<=\\s|^)\\-?\\.[0-9][\\w.]*",
+							"name": "invalid.illegal.numeric.float.missing-leading-zero.ns"
+						},
+						{
+							"comment": "0b_0_1, 0x_1p+3q",
+							"match": "(\\B\\-|\\b)0[box]_[0-9a-fA-F_]*(?:[pPeE][+-]?\\w+)?[\\w.]+",
+							"name": "invalid.illegal.numeric.leading-underscore.ns"
+						},
+						{
+							"comment": "02, 3_456",
+							"match": "(\\B\\-|\\b)(?<![\\[\\](){}\\p{L}_\\p{N}\\p{M}]\\.)[0-9][0-9_]*\\b(?!\\.[0-9])",
+							"name": "constant.numeric.integer.ns"
+						},
+						{
+							"match": "(\\B\\-|\\b)[0-9][\\w.]*",
+							"name": "invalid.illegal.numeric.other.ns"
+						}
+					]
+				}
+			}
+		},
+		"code-block": {
+			"begin": "\\{",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.section.scope.begin.ns"
+				}
+			},
+			"end": "\\}",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.section.scope.end.ns"
+				}
+			}
+		},
+		"comments": {
+			"patterns": [
+				{
+					"begin": "#\\*",
+					"captures": {
+						"0": {
+							"name": "punctuation.definition.comment.ns"
+						}
+					},
+					"end": "\\*#",
+					"name": "comment.block.ns"
+				},
+				{
+					"begin": "(^\\s+)?(?=#)(?!#\\*)",
+					"beginCaptures": {
+						"1": {
+							"name": "punctuation.whitespace.comment.leading.ns"
+						}
+					},
+					"end": "(?!\\G)",
+					"patterns": [
+						{
+							"begin": "#",
+							"beginCaptures": {
+								"0": {
+									"name": "punctuation.definition.comment.ns"
+								}
+							},
+							"end": "\\n|(?=\\?>)",
+							"name": "comment.line.number-sign.ns"
+						}
+					]
+				}
+			]
+		},
+		"builtin-types": {
+			"comment": "Types provided in the standard library",
+			"patterns": [
+				{
+					"include": "#builtin-class-type"
+				},
+				{
+					"include": "#builtin-objects"
+				},
+				{
+					"include": "#builtin-functions"
+				}
+			],
+			"repository": {
+				"builtin-class-type": {
+					"comment": "Builtin class types",
+					"match": "\\b(Str|Int|Float|List|Bool)\\b",
+					"name": "support.class.ns"
+				},
+				"builtin-objects": {
+					"comment": "Builtin objects",
+					"match": "\\b(Console|Math|Game|Server|Triggers|Targets|CombatTypes|PlayerStates|SoundTypes|ObjectiveStates|LogLevels)\\b",
+					"name": "support.class.ns"
+				},
+				"builtin-functions": {
+					"comment": "Builtin functions",
+					"match": "\\b(where|map|count|size|length|first|run|check|trigger|range|cost|grid|state|isEnabled|sprite|title|description|flavor)\\b",
+					"name": "support.function.ns"
+				}
+			}
+		}
+	},
+	"scopeName": "source.ns"
+}

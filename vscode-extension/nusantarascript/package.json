@@ -1,0 +1,34 @@
+{
+    "name": "nusantarascript",
+    "displayName": "nusantarascript",
+    "description": "Nusantara Script support",
+    "version": "0.0.2",
+    "icon": "icon.png",
+    "engines": {
+        "vscode": "^1.60.0"
+    },
+    "repository": {
+        "url": "https://github.com/globulus/nusantara-script"
+    },
+    "publisher": "Globulus",
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "ns",
+            "aliases": ["NusantaraScript", "ns"],
+            "extensions": ["ns"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "ns",
+            "scopeName": "source.ns",
+            "path": "./syntaxes/ns.tmLanguage.json"
+        }],
+      "snippets": [{
+          "language": "ns",
+          "path": "./snippets/ns.code-snippets"
+        }]
+    }
+}

@@ -1,0 +1,111 @@
+effect Curse {
+    trigger => Triggers.summon
+    check = false
+    run { }
+}
+
+effect Slam is Curse {
+    a = 3123
+    b = "asdjaksdhsa sjadjasda s"
+    
+    #comment ignore
+
+    #*
+        multiline comment ignore
+    *#
+
+
+    c(a1, a2) => a1 + a2
+
+    d => "some string"
+
+    run {
+        for i = 3; i <= 5 && c; i += 1 {
+            if a >= 2 {
+
+                
+            }
+        }
+    }
+
+    checkCondition(caster, target) {
+
+    }
+    
+}
+
+slam = Slam();
+Console.println(slam.c(1, 5));
+Console.println(slam.d);
+list = [1, 2, "tko", 3]
+Console.println(list)
+Console.println(list.size)
+#Console.println(list.length(1))
+a = 3
+while a < 10 {
+    Console.println(a)
+    a += 3
+}
+for it in list {
+    Console.println(it)
+}
+for i = 0; i < 5; i += 1 {
+    Console.println(i)
+}
+# fil = )
+Console.println("fil is $([1, 2, 3].where(=> $0 > 1))")
+
+res = when a {
+    7 => "seven"
+    8 || 9 => " or none"
+    in 10...12 => "even more"
+    else => "nada"
+}
+Console.println(res)
+
+obj = [a: 3, b: 5, c: "str"]
+Console.println(obj.b + obj.a)
+Console.println(obj.c)
+Console.println(obj)
+Console.println(obj.keys)
+
+for i in list.size.times {
+    Console.println(i)
+}
+
+for i in 1...4 {
+    Console.println(i)
+}
+
+for c in "some string" {
+    Console.print(c)
+}
+Console.println("")
+
+Console.println(Triggers.summon)
+
+fn testThrow {
+    Console.println("Before throw")
+    throw "Something"
+    Console.println("NEVER!")
+}
+
+throwCoalesce = testThrow() ?! "no exception here"
+Console.println(throwCoalesce)
+
+fn testRethrow {
+    Console.println("In rethrow")
+    result = testThrow() ?! throw
+    Console.println("NEVER!")
+}
+Console.println(testRethrow())
+
+
+ fn throws {
+    return "some"
+  }
+  
+Console.println(when throw throws() {
+    "some" => "exception"
+    else => "no exception"
+})

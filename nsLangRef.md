@@ -1,9 +1,3 @@
-# Nusanatara Script
-
-[Nusantara](https://playnusantara.com) scripting compiler and VM.
-
-PRs and improvements welcome.
-
 # NusantaraScript Language Reference
 
 NusantaraScript (NS) is a subset of [Šimi - the Warp edition](https://github.com/globulus/simi/), with some functionality kicked out to make the language simpler. It's also fully rewritten in C# to allow usage within [Nusantara's Unity engine](https://playnusantara.com).
